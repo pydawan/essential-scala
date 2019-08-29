@@ -1,0 +1,202 @@
+Compile-time and Run-time
+
+O código Scala possui dois estágios distintos.
+Primeiro ele é compilado e se a compilação é bem-sucedida então ele é executado ou avaliado (interpretação).
+
+Distinguir tipos (types) e valores (values).
+
+A compilação é o processo que verifica se um programa faz sentido.
+Existem duas maneiras para verificar se um programa faz sentido.
+
+1. Ele deve estar sintaticamente correto, significando que as partes do programa devem estar organizadas
+de acordo com a gramática da linguagem.
+
+INCORRETO: toUpperCase."Hello world!"
+CORRETO: "Hello world!".toUpperCase
+
+2. Deve ter seus tipos verificados, significando que ele deve obedecer a certas restrições.
+
+INCORRETO: 2.toUpperCase
+CORRETO: "2".toUpperCase
+
+OBSERVAÇÃO: O sistema de tipos sabe que o conceito de uppercase and lowercase não faz sentido em números e com base nisso lança um erro.
+
+Um programa pode compilar mas há ocasiões em que são lançados erros em tempo de execução (run-time).
+A divisão é uma operação suportada por números então 1 / 0 é válido em tempo de compilação porém em tempo de compilação é lançada uma exceção visto que
+esse tipo de divisão não é válida.
+
+Expressões são avaliadas e reduzidas para um valor.
+
+
+:help
+:type
+:paste
+
+
+:type 2 / 0 retorna Int
+2 / 0 lança uma java.lang.ArithmeticException: / by zero
+
+Após a fase de compilação o Scala garante que todos os valores estão sendo usados de forma consistente
+e assim ele não necessita armazenar informações sobre a representação dos tipos. Esse processo de remoção de informações de tipagem é chamado type erasure.
+
+
+Expressions, types and values
+
+1. Expressões são partes de um programa que são avaliados e resultam em um valor.
+   São a maior parte de um programa Scala.
+
+2. Expressões possuem tipos, que expressam algumas restrições em um programa.
+   Durante a fase de compilação os tipos de dados do nosso programa são verificados. Se eles são inconsistentes então a compilação falha e nós não podemos avaliar ou executar nosso programa.
+
+3. Valores existem na memória do computador e são aquilo que um programa em execução manipula.
+   Todos os valores em Scala são objetos.
+
+
+Objetos
+
+Um objeto agrupa dados e operações.
+Existe uma terminologia especial para os dados e operações de um objeto.
+As operações são conhecidas como métodos (methods). Os dados são armazenados em campos (fields).
+
+Objetos Literais (Literal Objects)
+Uma expressão literal representa um valor fixo que é inteligível por si mesmo.
+
+REPL (Read, Evaluate, Print, Loop)
+Interpretador: ciclo de leitura, avaliação e impressão.
+
+
+OBSERVAÇÃO: Não confundir um literal com o valor para o qual ele é avaliado!
+A expressão literal é a representação no texto do programa antes de sua execução, e o valor é a representação na memória do computador
+após a execução do programa.
+
+Byte 8-bit integers => não possui sintaxe literal sendo criado pela chamada ao método toByte
+
+Short 16-bit integers => não possui sintaxe literal sendo criado pela chamada ao método toShort
+
+Int  32-bit integers => sintaxe literal 42
+Long 64-bit integers => sintaxe literal 42L
+
+Float 32-bit floating point => sintaxe literal 42.0f
+Double 64-bit floating point => sintaxe literal 42.0
+
+Tipos de dados Built-in
+
+Byte
+Boolean
+Short
+Int
+Long
+Float
+Double
+Char   => 'a'
+String => "a"
+Null
+Unit   => ()
+
+Unit => () => o mesmo que void em Java
+
+Unit é um conceito importante no Scala. A maioria das construções sintáticas do Scala são expressões que tem tipos e valores.
+Nós precisamos de um lugar para expressões que não geram um valor útil e o unit fornece isso.
+
+"Hello world!" => essaa expressão literal é avaliada para um valor String.
+
+println("Hello world!") => essa expressão é avaliada para Unit e como efeito colateral imprime "Hello world!" no console.
+
+OBSERVAÇÃO: É importante diferenciar um programa que avalia para um valor e um que imprime um valor como efeito colateral.
+
+
+Tipos de dados built-in são fornecidos pelo compilador ou interpretador.
+Porém é possível criar tipos de dados personalizados ou do usuário.
+
+
+Objeto vazio (empty object)
+object Test {}
+
+
+Isso não é uma expressão pois sua avaliação não resulta em um valor. Ao invés disso, ela associa um nome (Test) a um valor (um objeto vazio).
+
+=========
+ Blocos
+=========
+
+Blocos são expressões que nos permitem sequenciar computações juntas.
+Eles são escritos como pares de chaves contendo sub-expressões separadas por ; ou \n
+
+Um bloco é uma sequência de expressões ou declarações cercadas por chaves. Um bloco também é uma expressão:
+ele executa cada uma de suas sub-expressões em ordem e retorna o valor da última expressão.
+
+Blocos podem ser utilizados para nomear estados intermediários.
+
+if (1 > 2) "alien" else "predator"
+
+o resultado da avaliação da expressão acima é uma String já que os dois tipos são String
+
+
+if (1 > 2) "alien" else 2001
+
+o resultado da avaliação da expressão acima é do tipo Any que é o ancestral em comum mais próximo entre os tipos String e Int que são diferentes entre si.
+Any é o supertipo de todos os tipos em Scala.
+
+OBSERVAÇÃO: Os tipos são determinados em tempo de compilação, antes do programa executar.
+O compilador não sabe quem entre 1 e 2 é o maior antes de executar o programa, assim só pode
+ter um bom palpite sobre o tipo do resultado da expressão condicional, sendo esse o tipo Any.
+
+Programadores Java não podem confundir Any com Object já que ele assume valores de tipos como Int e Boolean.
+
+if (false) "hello"
+
+Uma condicional sem uma expressão else têm como retorno uma Unit.
+
+
+3.1 Classes
+
+Uma classe é um modelo para criação de objetos que tem métodos e campos similares.
+
+class Person {
+    val firstName = "Noel"
+    val lastName = "Welsh"
+    def name = firstName + " " + lastName
+}
+
+Como a declaração de um objeto a declaração de uma classe associa um nome (nesse caso Person) e não é uma expressão.
+Entretando, diferentemente do nome do objeto, nós não podemos usar um nome de classe em uma expressão.
+A classe não é um valor e existe um namespace diferente no qual a classe habita.
+
+
+Java Tip
+
+Classe Scala são todas subclasses de java.lang.Object.
+Em sua grande parte podem ser usadas tanto no Java quanto no Scala.
+
+
+3.1.4 Hierarquia de Tipos do Scala
+
+Diferentemente do Java que separa os tipos em primitivos e objetos, tudo em Scala é um objeto. Como um resultado, valores de tipos primeitiso como Int e Boolean
+formam uma parte da mesma hierarquia de tipos como classes e traits.
+
+1. Any
+1.1 AnyVal
+1.1.1 Int (Java int)
+1.1.2 Double (Java double)
+1.1.3 Boolean (Java boolean)
+1.1.4 Unit (Java void)
+1.2 AnyRef (java.lang.Object)
+1.2.1 java.lang.String
+1.2.2 Array[T] (Java Array)
+1.2.3 All Java classes
+1.2.4 All Scala classes
+
+Null = type of null
+Nothing = type of throw
+
+
+Scala tem um grande super tipo chamado Any, sob o qual existem dois tipos, AnyVal e AnyRef.
+AnyVal é o supertipo de todos os tipos de valores e AnyRef é o supertipo de todos os tipos de referência ou classes.
+Todas as classes Scala e Java são subtipos de AnyRef.
+
+Alguns desses tipos são simples apelidos do Scala para tipos que existem no Java: Int é int, Boolean é boolean, and AnyRef é java.lang.Object.
+
+Existem dois tipos especiais que estão na parte inferior da hierarquia.
+Nothing é o tipo de expressões throw e Null é o tipo de valor null.
+
+
