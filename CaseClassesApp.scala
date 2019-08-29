@@ -35,6 +35,8 @@
 // Uma observação final. Se você se encontrar definindo uma case class sem parâmetros no construtor então no lugar você pode definir um case object.
 // Um case object é definido como um objeto singleton comum mas possui um método toString mais significativo e estende os traits Product e Serializable.
 
+// Case classes são o pão com manteiga dos tipos de dados do Scala. Use as, aprenda-as e amea-as.
+
 case class Person(firstName : String, lastName : String) {
     def name = firstName + " " + lastName
 }
