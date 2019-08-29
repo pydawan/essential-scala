@@ -39,6 +39,9 @@
 // Elas possuem numerosos métodos e recursos gerados automaticamente que poupam digitação. Nós podemos sobrescrever ou redefinir
 // esse comportamento parte por parte implementando os métodos relevantes para nós.
 
+// No Scala 2.10 e anteriores nós podiamos definir case classes contendo de 0 a 22 campos. No Scala 2.11 ganhamos a habilidade de definir 
+// classes case com tamanho arbitrário.
+
 case class Person(firstName : String, lastName : String) {
     def name = firstName + " " + lastName
 }
