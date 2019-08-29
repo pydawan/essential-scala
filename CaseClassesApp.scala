@@ -36,6 +36,8 @@
 // Um case object é definido como um objeto singleton comum mas possui um método toString mais significativo e estende os traits Product e Serializable.
 
 // Case classes são o pão com manteiga dos tipos de dados do Scala. Use as, aprenda-as e amea-as.
+// Elas possuem numerosos métodos e recursos gerados automaticamente que poupam digitação. Nós podemos sobrescrever ou redefinir
+// esse comportamento parte por parte implementando os métodos relevantes para nós.
 
 case class Person(firstName : String, lastName : String) {
     def name = firstName + " " + lastName
