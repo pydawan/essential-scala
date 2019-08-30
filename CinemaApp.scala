@@ -34,3 +34,23 @@ object Film {
     }
     
 }
+
+// Pattern Matching
+
+// Classes nos permitem abstrair objetos que compartilham um tipo e propriedades em comum.
+
+// Companion objects são usados no Scala para definir construtores auxiliares e outros
+// métodos utilitários que não pertencem a classe.
+
+// Case classes reduzem a repetição de código padrão e nos permitem usar pattern-matching,
+// uma nova forma de interagir com objetos além de chamadas a métodos.
+
+object Dad {
+    def rate(film: Film): Double = {
+        film match {
+            case Film(_, _, _, Director("Clint", "Eastwood", _)) => 10.0
+            case Film(_, _, _, Director("John", "McTiernan", _)) => 7.0
+            case _ => 3.0
+        }
+    }
+}
